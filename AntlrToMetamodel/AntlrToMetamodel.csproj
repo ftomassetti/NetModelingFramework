@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{0385D654-214F-4D0B-BD27-D99C8306BEF2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AntlrToMetamodel</RootNamespace>
+    <AssemblyName>AntlrToMetamodel</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <NoWin32Manifest>False</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr4.Runtime.v4.0">
+      <HintPath>..\..\..\..\tools\Antlr4.Runtime.4.1.0-alpha003\lib\net40\Antlr4.Runtime.v4.0.dll</HintPath>
+    </Reference>
+    <Reference Include="DotLiquid">
+      <HintPath>..\..\..\..\tools\DotLiquid v1.7.0\NET40\DotLiquid.dll</HintPath>
+    </Reference>
+    <Reference Include="NUnit.Framework">
+      <HintPath>$(SharpDevelopBinPath)\Tools\NUnit\NUnit.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AntlrContextNodeToMNodesConverter.cs" />
+    <Compile Include="AntlrContextReflection.cs" />
+    <Compile Include="ModelClassesGenerator.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test\AntlrContextNodeToMNodesConverterTest.cs" />
+    <Compile Include="test\AntlrContextReflectionTest.cs" />
+    <Compile Include="test\ExprBaseListener.cs" />
+    <Compile Include="test\ExprLexer.cs" />
+    <Compile Include="test\ExprListener.cs" />
+    <Compile Include="test\ExprParser.cs" />
+    <Compile Include="test\GeneratedModelClasses.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetModelingFramework\NetModelingFramework.csproj">
+      <Project>{AFA1A177-A60D-447E-8BD1-767A6AF8D097}</Project>
+      <Name>NetModelingFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="metamodel.liq">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
