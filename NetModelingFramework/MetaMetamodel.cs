@@ -14,6 +14,8 @@ namespace NetModelingFramework.Metamodel
 {
 	/// <summary>
 	/// A metamodel is basically a collection of metaclasses with a name.
+	/// 
+	/// Note that a MMetamodel is also a MMetaclass.
 	/// </summary>
 	public class MMetamodel : MObject
 	{
@@ -29,21 +31,12 @@ namespace NetModelingFramework.Metamodel
 		}
 
 		public bool HasMetaclass(string name){
-			foreach (var a in Metaclasses){
-				if (a.Name.Equals(name)){
-					return true;
-				}
-			}
-			return false;
+			return Metaclasses.Exists(e => e.Name.Equals(name));
 		}
 		
 		public MMetaclass GetMetaClassByName(string name){
-			foreach (var a in Metaclasses){
-				if (a.Name.Equals(name)){
-					return a;
-				}
-			}
-			throw new Exception("No metaclasses named "+name);
+			if (!HasMetaclass(name)) throw new Exception("No metaclasses named "+name);
+			return Metaclasses.Find(e => e.Name.Equals(name));
 		}				
 	}
 		
@@ -83,7 +76,7 @@ namespace NetModelingFramework.Metamodel
 			} else if (feature is MReference){
 				this.References.Add(feature as MReference);
 			} else {
-				throw new Exception("Also");
+				throw new Exception("Unexpected: this MFeature is neither an MAttribute nor a MReference, feature: "+feature);
 			}
 		}
 		
@@ -114,39 +107,21 @@ namespace NetModelingFramework.Metamodel
 		}	
 
 		public bool HasAttribute(string name){
-			foreach (var a in GetAllAttributes()){
-				if (a.Name.Equals(name)){
-					return true;
-				}
-			}
-			return false;
+			return GetAllAttributes().Exists(e => e.Name.Equals(name));
 		}
 		
 		public MAttribute GetAttribute(string name){
-			foreach (var a in GetAllAttributes()){
-				if (a.Name.Equals(name)){
-					return a;
-				}
-			}
-			throw new Exception("No attribute named "+name);
+			if (!HasAttribute(name)) throw new Exception("No attribute named "+name);
+			return GetAllAttributes().Find(e => e.Name.Equals(name));
 		}
 
 		public bool HasReference(string name){
-			foreach (var a in GetAllReferences()){
-				if (a.Name.Equals(name)){
-					return true;
-				}
-			}
-			return false;
+			return GetAllReferences().Exists(e => e.Name.Equals(name));
 		}
 		
 		public MReference GetReference(string name){
-			foreach (var a in GetAllReferences()){
-				if (a.Name.Equals(name)){
-					return a;
-				}
-			}
-			throw new Exception("No reference named "+name);
+			if (!HasReference(name)) throw new Exception("No reference named "+name);
+			return GetAllReferences().Find(e => e.Name.Equals(name));
 		}		
 	}
 	
